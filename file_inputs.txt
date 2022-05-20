@@ -1,0 +1,14 @@
+./test.rb park ABC-1234 White
+./test.rb park ABC-9999 White
+./test.rb park ABC-0001 Black
+./test.rb park ABC-7777 Red
+./test.rb park ABC-2701 Blue
+./test.rb park ABC-3141 Black
+./test.rb leave 4
+./test.rb status
+./test.rb park ABC-333 White
+./test.rb park ABC-9998 White
+./test.rb plate_numbers_for_cars_with_colour White
+./test.rb slot_numbers_for_cars_with_colour White
+./test.rb slot_number_for_registration_number ABC-3141
+./test.rb slot_number_for_registration_number ABD-1111
