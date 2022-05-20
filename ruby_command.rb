@@ -1,0 +1,1 @@
+IO.foreach("file_inputs.txt"){|command| system(command)}
