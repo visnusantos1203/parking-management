@@ -23,7 +23,7 @@ class ParkingManagement < Thor
 
   def park(plate_num, color)
     PARKING.transaction do |parking|
-      parking.roots.each_with_index do |park, index|
+      parking.roots.each do |park|
         available_slot = park.find { |slot| slot[:available] == true }
         if available_slot.nil?
           puts "Sorry, parking lot is full"
@@ -43,19 +43,19 @@ class ParkingManagement < Thor
 
   def leave(slot_num)
     PARKING.transaction do |parking|
-    parking.roots.each_with_index do |park, index|
-        leaving_slot = park.find { |slot| slot[:slot_num] == slot_num.to_i && slot[:available] == false}
-        if leaving_slot.nil?
-          puts "Slot number is either non-existent or unoccupied"
-        else
-          leaving_slot[:plate_num] = "        "
-          leaving_slot[:color] = "     "
-          leaving_slot[:available] = true
+      parking.roots.each do |park|
+          leaving_slot = park.find { |slot| slot[:slot_num] == slot_num.to_i && slot[:available] == false}
+          if leaving_slot.nil?
+            puts "Slot number is either non-existent or unoccupied"
+          else
+            leaving_slot[:plate_num] = "        "
+            leaving_slot[:color] = "     "
+            leaving_slot[:available] = true
 
-          puts "Slot number #{slot_num} is free"
+            puts "Slot number #{slot_num} is free"
 
-        end
-    end
+          end
+      end
     end
   end
 
@@ -80,7 +80,7 @@ class ParkingManagement < Thor
   def plate_numbers_for_cars_with_colour(color)
     result = []
     PARKING.transaction do |parking|
-      parking.roots.each_with_index do |park, index|
+      parking.roots.each do |park|
         color_matched = park.select { |slot| slot[:color].downcase == color.downcase }
         if color_matched.nil?
           puts "No car with #{color} color found"
@@ -98,7 +98,7 @@ class ParkingManagement < Thor
   def slot_numbers_for_cars_with_colour(color)
     result = []
     PARKING.transaction do |parking|
-      parking.roots.each_with_index do |park, index|
+      parking.roots.each do |park|
         color_matched = park.select { |slot| slot[:color].downcase == color.downcase }
         if color_matched.nil?
           puts "No slot with #{color} color car found"
@@ -115,7 +115,7 @@ class ParkingManagement < Thor
   
   def slot_number_for_registration_number(plate_num)
    PARKING.transaction do |parking|
-      parking.roots.each_with_index do |park, index|
+      parking.roots.each do |park|
         slot_parked = park.find { |slot| slot[:plate_num] == plate_num.upcase }
         if slot_parked.nil?
           puts "No car with plate number: #{plate_num} found"
